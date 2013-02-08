@@ -18,7 +18,7 @@ public class ConfigBuilder {
 		BufferedReader br = null;
 		try {
 			String sCurrentLine;
-			br = new BufferedReader(new FileReader("/config/sfkeys.key"));
+			br = new BufferedReader(new FileReader("config/appkeys.key"));
 			//read in keys and apply them
 			_cb.setOAuthConsumerKey(br.readLine());
 			_cb.setOAuthConsumerSecret(br.readLine());
