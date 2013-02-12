@@ -16,16 +16,17 @@ import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
-public class test {
+public class DataAggregate {
 	public static void main(String[] args) throws TwitterException, IOException{
 		//passes our app tokens to twitter to log in
 		ConfigBuilder cb = new ConfigBuilder();
 
-		
+		//final FileWrite fw = new FileWrite();
 		//pull tweets as objects
 	    StatusListener listener = new StatusListener(){
 	        public void onStatus(Status status) {
-	            System.out.println(status.getUser().getName() + " : " + status.getText());
+	            //fw.writeLine("<un>" + status.getUser().getName() + "</un> <tt> " + status.getText() + "</tt> <dt>" + status.getCreatedAt() + "</dt>");
+	        	RollingDataFileAppender.writeEvent("<un>" + status.getUser().getName() + "</un> <tt> " + status.getText() + "</tt> <dt>" + status.getCreatedAt() + "</dt>");
 	        }
 	        public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {}
 	        public void onTrackLimitationNotice(int numberOfLimitedStatuses) {}
@@ -43,7 +44,7 @@ public class test {
 	    };
 	    
 	    //write to a file called out.txt in the local file system (out.txt)
-	    final FileWrite fw = new FileWrite();
+	    
 	    
 	    //pull raw tweet data (text only)
 	    //dump it to a file called out.txt
@@ -51,7 +52,7 @@ public class test {
 	    	int tweets=0;
             @Override
             public void onMessage(String rawJSON) {
-            	fw.writeLine("Tweet: " + tweets + rawJSON + '\n');
+            	//fw.writeLine("Tweet: " + tweets + rawJSON + '\n');
             	tweets++;
             }
             @Override
@@ -65,21 +66,22 @@ public class test {
 	    TwitterStream twitterStream = new TwitterStreamFactory(cb.getConfig().build()).getInstance();
 	    
 	    //pick our listener (raw or status)
-	    twitterStream.addListener(listenerraw);
+	    twitterStream.addListener(listener);
 	    
 	    // sample() method internally creates a thread which manipulates TwitterStream and calls these adequate listener methods continuously.
+	    System.out.println("Beginning Tweet Dump");
 	    twitterStream.sample();
 	    try {
-	    	//gather data from the simulation for 60 seconds
-			Thread.sleep(60000);
+	    	//gather data from the simulation for 240 seconds
+			Thread.sleep(240000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    
 	    //finish
-	    fw.closeFile();
-	    System.out.println("done. ");
+	    //fw.closeFile();
+	    System.out.println("Completed.");
 	    System.exit(0);
 	    
 	}

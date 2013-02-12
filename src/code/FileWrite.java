@@ -1,7 +1,10 @@
 package code;
 import java.io.*;
 
+import javax.swing.Timer;
+
 public class FileWrite {
+	private Timer _timer;
 	FileWriter _fstream;
 	BufferedWriter _out;
 	
@@ -13,11 +16,12 @@ public class FileWrite {
 			e.printStackTrace();
 		}
 		_out = new BufferedWriter(_fstream);
+		
 	}
 	
 	public void writeLine(String s) {
 		try {
-			_out.write(s);
+			_out.write(s+'\n');
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
