@@ -17,6 +17,16 @@ import twitter4j.TwitterStreamFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class DataAggregate {
+	
+	public static final String UN_OPEN = "<un>";
+	public static final String UN_CLOSE = "</un>";
+	public static final String TT_OPEN = "<tt>";
+	public static final String TT_CLOSE = "</tt>";
+	public static final String DT_OPEN = "<dt>";
+	public static final String DT_CLOSE = "</dt>";
+	public static final String RT_OPEN = "<rt>";
+	public static final String RT_CLOSE = "</rt>";
+	
 	public static void main(String[] args) throws TwitterException, IOException{
 		//passes our app tokens to twitter to log in
 		ConfigBuilder cb = new ConfigBuilder();
@@ -26,7 +36,7 @@ public class DataAggregate {
 	    StatusListener listener = new StatusListener(){
 	        public void onStatus(Status status) {
 	            //fw.writeLine("<un>" + status.getUser().getName() + "</un> <tt> " + status.getText() + "</tt> <dt>" + status.getCreatedAt() + "</dt>");
-	        	RollingDataFileAppender.writeEvent("<un>" + status.getUser().getName() + "</un> <tt> " + status.getText() + "</tt> <dt>" + status.getCreatedAt() + "</dt>");
+	        	RollingDataFileAppender.writeEvent(UN_OPEN + status.getUser().getName() + UN_CLOSE + TT_OPEN + status.getText() + TT_CLOSE + DT_OPEN + status.getCreatedAt() + DT_CLOSE + RT_OPEN + status.getRetweetCount() + RT_CLOSE);
 	        }
 	        public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {}
 	        public void onTrackLimitationNotice(int numberOfLimitedStatuses) {}
