@@ -27,7 +27,7 @@ public class DataAggregate {
 	public static final String RT_OPEN = "<rt>";
 	public static final String RT_CLOSE = "</rt>";
 	
-	public static void main(String[] args) throws TwitterException, IOException{
+	public void getData() throws TwitterException, IOException{
 		//passes our app tokens to twitter to log in
 		ConfigBuilder cb = new ConfigBuilder();
 
