@@ -27,6 +27,39 @@ public class DataAggregate {
 	public static final String RT_OPEN = "<rt>";
 	public static final String RT_CLOSE = "</rt>";
 	
+	private int failures = 0;
+	public void start() {
+			try {
+				this.getData();
+				
+			} catch (TwitterException e) {
+				System.err.println("TwitterException Generated. Retrying in 5 seconds...");
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				if(failures < 1000) {
+					this.start();
+				}
+				e.printStackTrace();
+			} catch (IOException e) {
+				failures++;
+				System.err.println("IO Generated. Retrying in 5 seconds...");
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				if(failures < 1000) {
+					this.start();
+				}
+				e.printStackTrace();
+			}
+	}
+	
 	public void getData() throws TwitterException, IOException{
 		//passes our app tokens to twitter to log in
 		ConfigBuilder cb = new ConfigBuilder();
@@ -81,18 +114,8 @@ public class DataAggregate {
 	    // sample() method internally creates a thread which manipulates TwitterStream and calls these adequate listener methods continuously.
 	    System.out.println("Beginning Tweet Dump");
 	    twitterStream.sample();
-	    try {
-	    	//gather data from the simulation for 240 seconds
-			Thread.sleep(240000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	    
-	    //finish
-	    //fw.closeFile();
-	    System.out.println("Completed.");
-	    System.exit(0);
-	    
+
+	  
 	}
 }
