@@ -150,7 +150,7 @@ public class RollingDataFileAppender{
     }
     
     // Foo bar fatal
-    logger.fatal( "Foo bar" );
+    logger.fatal("Foo bar" );
     
     logger.info( "Example ran successfully" );
     
