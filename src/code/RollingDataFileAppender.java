@@ -86,7 +86,7 @@ public class RollingDataFileAppender{
       final RollingFileAppender rfp = new RollingFileAppender( pl,
                           logFile.getCanonicalPath(),
                           true );
-      
+      rfp.setEncoding("UTF-8");
       // We want the logger to flush its output to the log file
       // stream immeaditely; if you don't have this set, then
       // Log4j will buffer the log file output which isn't ideal.
