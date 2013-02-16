@@ -70,7 +70,7 @@ public class DataAggregate {
 		//pull tweets as objects
 	    StatusListener listener = new StatusListener(){
 	        public void onStatus(Status status) {
-	        	//gather english only
+	        	//gather english only:
 	        	if(status.getUser().getLang().equals(ENGLISH)) {
 	        		RollingDataFileAppender.writeEvent(UN_OPEN + status.getUser().getName() + UN_CLOSE + TT_OPEN + status.getText() + TT_CLOSE + DT_OPEN + status.getCreatedAt() + DT_CLOSE + RT_OPEN + status.getRetweetCount() + RT_CLOSE);
 	        	}
