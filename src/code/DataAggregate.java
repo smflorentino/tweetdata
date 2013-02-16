@@ -14,6 +14,7 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
+import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class DataAggregate {
@@ -26,6 +27,7 @@ public class DataAggregate {
 	public static final String DT_CLOSE = "</dt>";
 	public static final String RT_OPEN = "<rt>";
 	public static final String RT_CLOSE = "</rt>";
+	public static final String ENGLISH = "en";
 	
 	private int failures = 0;
 	public void start() {
@@ -63,13 +65,15 @@ public class DataAggregate {
 	public void getData() throws TwitterException, IOException{
 		//passes our app tokens to twitter to log in
 		ConfigBuilder cb = new ConfigBuilder();
-
+		System.out.println("Filtering Data by English...");
 		//final FileWrite fw = new FileWrite();
 		//pull tweets as objects
 	    StatusListener listener = new StatusListener(){
 	        public void onStatus(Status status) {
-	            //fw.writeLine("<un>" + status.getUser().getName() + "</un> <tt> " + status.getText() + "</tt> <dt>" + status.getCreatedAt() + "</dt>");
-	        	RollingDataFileAppender.writeEvent(UN_OPEN + status.getUser().getName() + UN_CLOSE + TT_OPEN + status.getText() + TT_CLOSE + DT_OPEN + status.getCreatedAt() + DT_CLOSE + RT_OPEN + status.getRetweetCount() + RT_CLOSE);
+	        	if(status.getUser().getLang().equals(ENGLISH)) {
+	        		RollingDataFileAppender.writeEvent(UN_OPEN + status.getUser().getName() + UN_CLOSE + TT_OPEN + status.getText() + TT_CLOSE + DT_OPEN + status.getCreatedAt() + DT_CLOSE + RT_OPEN + status.getRetweetCount() + RT_CLOSE);
+	        	}
+	            //fw.writeLine("<un>" + status.getUser().getName() + "</un> <tt> " + status.getText() + "</tt> <dt>" + status.getCreatedAt() + "</dt>")
 	        }
 	        public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {}
 	        public void onTrackLimitationNotice(int numberOfLimitedStatuses) {}
