@@ -17,6 +17,7 @@ import twitter4j.TwitterStreamFactory;
 import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
 
+
 public class DataAggregate {
 	
 	public static final String UN_OPEN = "<un>";
@@ -28,11 +29,53 @@ public class DataAggregate {
 	public static final String RT_OPEN = "<rt>";
 	public static final String RT_CLOSE = "</rt>";
 	public static final String LANG = "en";
+	public static final String ENGLISH = "en";
+	
+	private int failures = 0;
+	private long time;
+	
+	public DataAggregate(long t){
+		time=t;
+	}
+	
+	public void setTime(long t){
+		time=t;
+	}
+	public void start() {
+			try {
+				this.getData();
+				
+			} catch (TwitterException e) {
+				System.err.println("TwitterException Generated. Retrying in 5 seconds...");
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				if(failures < 1000) {
+					this.start();
+				}
+				e.printStackTrace();
+			} catch (IOException e) {
+				failures++;
+				System.err.println("IO Generated. Retrying in 5 seconds...");
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				if(failures < 1000) {
+					this.start();
+				}
+				e.printStackTrace();
+			}
+	}
+//>>>>>>> branch 'master' of https://github.com/smflorentino/tweetdata.git
 	
 	public void getData() throws TwitterException, IOException{
 		//passes our app tokens to twitter to log in
 		ConfigBuilder cb = new ConfigBuilder();
-
+		System.out.println("Filtering Data by English...");
 		//final FileWrite fw = new FileWrite();
 		//pull tweets as objects
 
@@ -40,13 +83,27 @@ public class DataAggregate {
 			User user;
 			String lang;
 	        public void onStatus(Status status) {
+//<<<<<<< HEAD
 	        	user = status.getUser();
 	        	lang = user.getLang();
 	            //fw.writeLine("<un>" + status.getUser().getName() + "</un> <tt> " + status.getText() + "</tt> <dt>" + status.getCreatedAt() + "</dt>");
-	        	if(lang.equals(LANG)){
+	        /*	if(lang.equals(LANG)){
+	        		RollingDataFileAppender.writeEvent(UN_OPEN + status.getUser().getName() + UN_CLOSE + TT_OPEN + status.getText() + TT_CLOSE + DT_OPEN + status.getCreatedAt() + DT_CLOSE + RT_OPEN + status.getRetweetCount() + RT_CLOSE);
+	        	}*/
+	        	
+//=======
+	        	//gather english only:
+	        	if(status.getUser().getLang().equals(ENGLISH)) {
 	        		RollingDataFileAppender.writeEvent(UN_OPEN + status.getUser().getName() + UN_CLOSE + TT_OPEN + status.getText() + TT_CLOSE + DT_OPEN + status.getCreatedAt() + DT_CLOSE + RT_OPEN + status.getRetweetCount() + RT_CLOSE);
 	        	}
-	        	
+	            //fw.writeLine("<un>" + status.getUser().getName() + "</un> <tt> " + status.getText() + "</tt> <dt>" + status.getCreatedAt() + "</dt>")
+//>>>>>>> branch 'master' of https://github.com/smflorentino/tweetdata.git
+
+	        	//gather english only:
+	        	if(status.getUser().getLang().equals(ENGLISH)) {
+	        		RollingDataFileAppender.writeEvent(UN_OPEN + status.getUser().getName() + UN_CLOSE + TT_OPEN + status.getText() + TT_CLOSE + DT_OPEN + status.getCreatedAt() + DT_CLOSE + RT_OPEN + status.getRetweetCount() + RT_CLOSE);
+	        	}
+	            //fw.writeLine("<un>" + status.getUser().getName() + "</un> <tt> " + status.getText() + "</tt> <dt>" + status.getCreatedAt() + "</dt>")
 	        }
 	        public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {}
 	        public void onTrackLimitationNotice(int numberOfLimitedStatuses) {}
@@ -55,11 +112,11 @@ public class DataAggregate {
 	        }
 			@Override
 			public void onScrubGeo(long arg0, long arg1) {
-				// TODO Auto-generated method stub
+				//  Auto-generated method stub
 			}
 			@Override
 			public void onStallWarning(StallWarning arg0) {
-				// TODO Auto-generated method stub	
+				//  Auto-generated method stub	
 			}
 	    };
 	    
@@ -91,18 +148,15 @@ public class DataAggregate {
 	    // sample() method internally creates a thread which manipulates TwitterStream and calls these adequate listener methods continuously.
 	    System.out.println("Beginning Tweet Dump");
 	    twitterStream.sample();
+	    //wait for required amount of time then stop collecting
 	    try {
-	    	//gather data from the simulation for 240 seconds
-			Thread.sleep(240000);
+			Thread.sleep(time);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    
-	    //finish
-	    //fw.closeFile();
-	    System.out.println("Completed.");
-	    System.exit(0);
-	    
+	    twitterStream.shutdown();
+
+	  
 	}
+
 }

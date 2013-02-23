@@ -40,8 +40,8 @@ public class RollingDataFileAppender{
   // The default log level is INFO.
   private static final Level DEFAULT_LOGGER_LEVEL = Level.INFO;
   
-  private static final String LOG_DIR = "log";
-  private static final String LOG_FILENAME = "my.log";
+  private static final String LOG_DIR = "data";
+  private static final String LOG_FILENAME = "tweets.log";
   
   private static final String FILE_SEPARATOR_PROP = "file.separator";
   private static final String SYSTEM_OUT = "System.out";
@@ -57,7 +57,7 @@ public class RollingDataFileAppender{
   // expressed respectively in kilobytes, megabytes or gigabytes. For example,
   // the value "10KB" will be interpreted as 10240. 
   private static final int MAX_LOG_BACKUP_FILES = 200;
-  private static final String MAX_LOG_FILE_SIZE = "1024KB"; 
+  private static final String MAX_LOG_FILE_SIZE = "65536KB"; 
   private static final int LOG_IO_BUFFER_SIZE_BYTES = 1024;
   
   // We use the root logger for everything so we can capture all of the output
@@ -86,7 +86,7 @@ public class RollingDataFileAppender{
       final RollingFileAppender rfp = new RollingFileAppender( pl,
                           logFile.getCanonicalPath(),
                           true );
-      
+      rfp.setEncoding("UTF-8");
       // We want the logger to flush its output to the log file
       // stream immeaditely; if you don't have this set, then
       // Log4j will buffer the log file output which isn't ideal.
@@ -127,7 +127,7 @@ public class RollingDataFileAppender{
    * 
    * @param args
    */
-  public static void main ( String [] args ) {
+  /*public static void main ( String [] args ) {
     
     // Log an info message.
     logger.info( "Some info message" );
@@ -150,10 +150,10 @@ public class RollingDataFileAppender{
     }
     
     // Foo bar fatal
-    logger.fatal( "Foo bar" );
+    logger.fatal("Foo bar" );
     
     logger.info( "Example ran successfully" );
     
-  }
+  }*/
 
 }
