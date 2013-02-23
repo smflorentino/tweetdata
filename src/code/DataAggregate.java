@@ -17,6 +17,7 @@ import twitter4j.TwitterStreamFactory;
 import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
 
+
 public class DataAggregate {
 	
 	public static final String UN_OPEN = "<un>";
@@ -30,6 +31,15 @@ public class DataAggregate {
 	public static final String ENGLISH = "en";
 	
 	private int failures = 0;
+	private long time;
+	
+	public DataAggregate(long t){
+		time=t;
+	}
+	
+	public void setTime(long t){
+		time=t;
+	}
 	public void start() {
 			try {
 				this.getData();
@@ -39,7 +49,6 @@ public class DataAggregate {
 				try {
 					Thread.sleep(5000);
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				if(failures < 1000) {
@@ -52,7 +61,6 @@ public class DataAggregate {
 				try {
 					Thread.sleep(5000);
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				if(failures < 1000) {
@@ -83,11 +91,11 @@ public class DataAggregate {
 	        }
 			@Override
 			public void onScrubGeo(long arg0, long arg1) {
-				// TODO Auto-generated method stub
+				//  Auto-generated method stub
 			}
 			@Override
 			public void onStallWarning(StallWarning arg0) {
-				// TODO Auto-generated method stub	
+				//  Auto-generated method stub	
 			}
 	    };
 	    
@@ -119,8 +127,15 @@ public class DataAggregate {
 	    // sample() method internally creates a thread which manipulates TwitterStream and calls these adequate listener methods continuously.
 	    System.out.println("Beginning Tweet Dump");
 	    twitterStream.sample();
-	    
+	    //wait for required amount of time then stop collecting
+	    try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	    twitterStream.shutdown();
 
 	  
 	}
+
 }
