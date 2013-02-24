@@ -42,17 +42,29 @@ public class Driver {
 		threeHoursButton.addActionListener(new RadioActionListeners(threeHoursButton));
 		threeHoursButton.setActionCommand("3h");
 		threeHoursButton.setBackground(_c);
+		JRadioButton dayButton = new JRadioButton("1 day");
+		dayButton.addActionListener(new RadioActionListeners(dayButton));
+		dayButton.setActionCommand("d");
+		dayButton.setBackground(_c);
+		JRadioButton weekButton = new JRadioButton("1 week");
+		weekButton.addActionListener(new RadioActionListeners(weekButton));
+		weekButton.setActionCommand("w");
+		weekButton.setBackground(_c);
 		_buttonGroup = new ButtonGroup();
 		_buttonGroup.add(twentySecsButton);
 		_buttonGroup.add(fiveMinutesButton);
 		_buttonGroup.add(hourButton);
 		_buttonGroup.add(threeHoursButton);
+		_buttonGroup.add(dayButton);
+		_buttonGroup.add(weekButton);
 		twentySecsButton.setSelected(true);
 
 		radioPanel.add(twentySecsButton);
 		radioPanel.add(fiveMinutesButton);
 		radioPanel.add(hourButton);
 		radioPanel.add(threeHoursButton);
+		radioPanel.add(dayButton);
+		radioPanel.add(weekButton);
 		buttonPanel.add(_button);
 		_panel.add(radioPanel);
 		_panel.add(buttonPanel);
@@ -65,7 +77,7 @@ public class Driver {
 		_panel.setBackground(_c);
 	    _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 //	    _frame.pack();
-	    _frame.setSize(400, 400);
+	    _frame.setSize(500, 500);
 	    _frame.setVisible(true);
 	}
 	
@@ -100,6 +112,12 @@ public class Driver {
 		}else if(s.equals("3h")){
 			//collect data for 3 hours = 1.08e+7ms
 			time = 10800000;
+		}else if(s.equals("d")){
+			//collect data for 1 day = 86400000ms
+			time = 86400000;
+		}else if(s.equals("w")){
+			//collect data for 1 week = 6.048e+8ms
+			time=604800000;
 		}
 		
 		_da.setTime(time);
