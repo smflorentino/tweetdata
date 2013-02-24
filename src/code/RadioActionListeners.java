@@ -6,7 +6,11 @@ import java.awt.event.ItemEvent;
 
 import javax.swing.JRadioButton;
 import javax.swing.event.ChangeEvent;
-
+/**
+ * ActionListener for the radio buttons that allow the change of collection duration
+ * @author Alyssa
+ *
+ */
 public class RadioActionListeners implements ActionListener {
 
 	private JRadioButton _b;
@@ -16,11 +20,10 @@ public class RadioActionListeners implements ActionListener {
 		
 	}
 	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		_b.setSelected(!_b.isSelected());
-		System.out.println(_b.getLabel());
-
 	}
 
     public void itemStateChanged(ItemEvent e) {

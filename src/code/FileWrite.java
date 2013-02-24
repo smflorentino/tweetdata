@@ -2,7 +2,11 @@ package code;
 import java.io.*;
 
 import javax.swing.Timer;
-
+/**
+ * Class to allow writing data to files
+ * @author Scott
+ *
+ */
 public class FileWrite {
 	private Timer _timer;
 	FileWriter _fstream;

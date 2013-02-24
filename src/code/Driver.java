@@ -6,7 +6,12 @@ import java.awt.*;
 import javax.swing.event.ChangeListener;
 import javax.swing.JRadioButton;
 
-
+/**
+ * Puts together the GUI for tweet data collection
+ * and begins relevant data collection methods
+ * @author Alyssa
+ *
+ */
 
 
 public class Driver {
@@ -82,23 +87,15 @@ public class Driver {
 	}
 	
 
-	
+/**Begin the collection process based on the collection duration selected via
+ * radio buttons
+ * @author Alyssa
+ * 	
+ */
 	public void collect(){
 		//remove the button
 		long time=0;
-//		if(twentySecsButton.isSelected()){
-//			//collect data for 20secs = 20000ms
-//			time =20000;
-//		}else if(fiveMinutesButton.isSelected()){
-//			//collect data for 5 minutes = 300000ms
-//			time = 300000;
-//		}else if(hourButton.isSelected()){
-//			//collect data for 1 hour = 3.6e+6 ms
-//			time = 3600000;
-//		}else if(threeHoursButton.isSelected()){
-//			//collect data for 3 hours = 1.08e+7ms
-//			time = 10800000;
-//		}
+
 		String s=_buttonGroup.getSelection().getActionCommand();
 		if(s.equals("20s")){
 			//collect data for 20secs = 20000ms

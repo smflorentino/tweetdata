@@ -16,7 +16,11 @@ import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
 import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
-
+/**
+ * Collect the data from Twitter
+ * @author Scott
+ *
+ */
 
 public class DataAggregate {
 	
