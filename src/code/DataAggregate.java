@@ -87,27 +87,12 @@ public class DataAggregate {
 			User user;
 			String lang;
 	        public void onStatus(Status status) {
-//<<<<<<< HEAD
 	        	user = status.getUser();
 	        	lang = user.getLang();
-	            //fw.writeLine("<un>" + status.getUser().getName() + "</un> <tt> " + status.getText() + "</tt> <dt>" + status.getCreatedAt() + "</dt>");
-	        /*	if(lang.equals(LANG)){
-	        		RollingDataFileAppender.writeEvent(UN_OPEN + status.getUser().getName() + UN_CLOSE + TT_OPEN + status.getText() + TT_CLOSE + DT_OPEN + status.getCreatedAt() + DT_CLOSE + RT_OPEN + status.getRetweetCount() + RT_CLOSE);
-	        	}*/
-	        	
-//=======
 	        	//gather english only:
 	        	if(status.getUser().getLang().equals(ENGLISH)) {
 	        		RollingDataFileAppender.writeEvent(UN_OPEN + status.getUser().getName() + UN_CLOSE + TT_OPEN + status.getText() + TT_CLOSE + DT_OPEN + status.getCreatedAt() + DT_CLOSE + RT_OPEN + status.getRetweetCount() + RT_CLOSE);
 	        	}
-	            //fw.writeLine("<un>" + status.getUser().getName() + "</un> <tt> " + status.getText() + "</tt> <dt>" + status.getCreatedAt() + "</dt>")
-//>>>>>>> branch 'master' of https://github.com/smflorentino/tweetdata.git
-
-	        	//gather english only:
-	        	if(status.getUser().getLang().equals(ENGLISH)) {
-	        		RollingDataFileAppender.writeEvent(UN_OPEN + status.getUser().getName() + UN_CLOSE + TT_OPEN + status.getText() + TT_CLOSE + DT_OPEN + status.getCreatedAt() + DT_CLOSE + RT_OPEN + status.getRetweetCount() + RT_CLOSE);
-	        	}
-	            //fw.writeLine("<un>" + status.getUser().getName() + "</un> <tt> " + status.getText() + "</tt> <dt>" + status.getCreatedAt() + "</dt>")
 	        }
 	        public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {}
 	        public void onTrackLimitationNotice(int numberOfLimitedStatuses) {}
